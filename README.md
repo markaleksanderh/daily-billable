@@ -14,3 +14,5 @@ To Do:
 - Get list of users with billable hours < 8 from Harvest
 - Check date input is in correct format before requesting absences
 - Replace date input with date selector
+- Refactor leave types set to check absence is not one of an invalid type
+
