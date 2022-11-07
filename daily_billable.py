@@ -74,7 +74,9 @@ def get_absences(date):
     headers["Authorization"] = "Bearer {}".format(config['TIMETASTIC_TOKEN'])
     absences = requests.get(url, headers=headers).json()['holidays']
     valid_absences = [[i['userName'], i['startDateString'], i['endDateString'], i['leaveType']] for i in absences if i['leaveType'] != "Working in Office"]
+
     return valid_absences
+
     
 def update_absence(conn, absence):
     """
@@ -156,33 +158,37 @@ def get_missing_entries():
 
 
 def main():
-    os.remove('daily_billable.db')
-    # database = ':memory:'
-    database = 'daily_billable.db'
-    sql_create_team_table = """ CREATE TABLE IF NOT EXISTS team (
-        id integer PRIMARY KEY,
-        name text NOT NULL,
-        absence_start_date text,
-        absence_end_date text,
-        absence_type text,
-        hours integer,
-        billable_hours integer,
-        non_billable_hours integer
-        ); """
-    conn = create_connection(database)
-    if conn is not None:
-        create_table(conn, sql_create_team_table)
-    else:
-        print("Cannot create db connection")
+    
+    # os.remove('daily_billable.db')
+    # # database = ':memory:'
+    # database = 'daily_billable.db'
+    # sql_create_team_table = """ CREATE TABLE IF NOT EXISTS team (
+    #     id integer PRIMARY KEY,
+    #     name text NOT NULL,
+    #     absence_start_date text,
+    #     absence_end_date text,
+    #     absence_type text,
+    #     hours integer,
+    #     billable_hours integer,
+    #     non_billable_hours integer
+    #     ); """
+    # conn = create_connection(database)
+    # if conn is not None:
+    #     create_table(conn, sql_create_team_table)
+    # else:
+    #     print("Cannot create db connection")
 
-    team_file = 'team.txt'
-    team = get_team(team_file)
-    add_all_team(team, conn)
-    selected_date = "2022-10-07"
-    absence_list = get_absences(selected_date)
-    update_all_absences(absence_list, conn)
-    tracked_hour_entries = get_tracked(selected_date)
-    update_all_hours(conn, tracked_hour_entries)
+    # team_file = 'team.txt'
+    # team = get_team(team_file)
+    # add_all_team(team, conn)
+    # selected_date = "2022-10-31"
+    # absence_list = get_absences(selected_date)
+    # update_all_absences(absence_list, conn)
+    # tracked_hour_entries = get_tracked(selected_date)
+    # update_all_hours(conn, tracked_hour_entries)
+    
+    absences = get_absences('2022-11-03')
+    print(tabulate(sorted(absences, key = lambda x: x[0])))
     
 
 

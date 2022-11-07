@@ -1,0 +1,31 @@
+<head>
+    <title>Daily Billable</title>
+    <meta charset="utf-8">
+    <meta name="description" content={{description}}>
+    <link rel="shortcut icon" href="/favicon.ico">
+  </head>
+  <body>
+    <h1>Daily Billable</h1>
+    <h3>{{date}}</h3>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Absence Type</th>
+            <th>Billable</th>
+            <th>Non-Billable</th>
+        </thead>
+        <tbody>
+            {% for i in team %}
+            <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.absence}}</td>
+                <td>{{i.billable_hours}}</td>
+                <td>{{i.non_billable_hours}}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </body>
+
+</html>
